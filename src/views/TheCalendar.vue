@@ -1,28 +1,75 @@
 <template>
+  <the-loading v-if="loading" />
   <div class="content">
     <div class="container">
-      <FullCalendar class="calendar" :options="calendarOptions" />
+      <FullCalendar class="calendar" :options="calendarOptions">
+        <template v-slot:eventContent="arg">
+          {{ arg.event.title }}
+        </template>
+      </FullCalendar>
     </div>
   </div>
 </template>
 
 <script>
-import "@fullcalendar/core/vdom"; // solves problem with Vite
+import "@fullcalendar/core/vdom";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
 export default {
   components: {
-    FullCalendar, // make the <FullCalendar> tag available
+    FullCalendar,
   },
   data() {
     return {
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin],
+        initialDate: "2022-08-01",
         initialView: "dayGridMonth",
+        editable: true,
+        selectable: true,
+        events: [],
+        select: this.handleDateSelect,
+        //eventClick: this.handleEventClick,
+        eventsSet: this.handleEvents,
       },
+      currentNotes: [],
     };
+  },
+  computed: {
+    loading() {
+      return this.$store.getters["getLoading"];
+    },
+    notes() {
+      return this.$store.getters["getNotes"];
+    },
+  },
+  watch: {
+    notes: {
+      deep: true,
+      handler() {
+        this.handleEvents();
+      },
+    },
+  },
+  methods: {
+    handleDateSelect(calendarProps) {
+      let noteTitle = prompt("Ingresa la nueva nota: ");
+      if (noteTitle) {
+        const note = {
+          title: noteTitle,
+          start: calendarProps.startStr,
+          end: calendarProps.endStr,
+          allDay: calendarProps.allDay,
+        };
+        this.$store.dispatch("createNote", note);
+      }
+    },
+    handleEvents() {
+      const notes = this.$store.getters["getNotes"];
+      this.calendarOptions.events = notes;
+    },
   },
 };
 </script>
