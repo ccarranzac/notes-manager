@@ -36,6 +36,16 @@ export default createStore({
         localStorage.setItem("notes", JSON.stringify(notes));
       }, 2000);
     },
+    deleteNote({ commit, getters }, payload) {
+      commit("setLoading", true);
+      setTimeout(() => {
+        let notes = getters.getNotes;
+        notes = notes.filter((el) => el.id !== payload);
+        commit("setNotes", notes);
+        localStorage.setItem("notes", JSON.stringify(notes));
+        commit("setLoading", false);
+      }, 2000);
+    },
     initialNotes({ commit }) {
       const notes = localStorage.getItem("notes");
       if (notes) {

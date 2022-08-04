@@ -31,7 +31,7 @@ export default {
         selectable: true,
         events: [],
         select: this.handleDateSelect,
-        //eventClick: this.handleEventClick,
+        eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
       },
       currentNotes: [],
@@ -64,6 +64,16 @@ export default {
           allDay: calendarProps.allDay,
         };
         this.$store.dispatch("createNote", note);
+      }
+    },
+    handleEventClick(calendarProps) {
+      if (
+        confirm(
+          `Estas seguro que quieres borrar la nota: '${calendarProps.event.title}'?`
+        )
+      ) {
+        const eventId = calendarProps.event.id;
+        this.$store.dispatch("deleteNote", eventId);
       }
     },
     handleEvents() {
