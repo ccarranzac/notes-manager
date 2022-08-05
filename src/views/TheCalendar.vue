@@ -32,7 +32,7 @@
       <p>¿Estas seguro que quieres borrar la nota?</p>
     </template>
     <template #actions>
-      <va-button @click="confirmDelete"> Add </va-button>
+      <va-button @click="confirmDelete"> Delete </va-button>
       <va-button flat @click="closeDialog"> Cancel </va-button>
     </template>
   </base-dialog>
