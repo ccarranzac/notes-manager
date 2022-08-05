@@ -31,10 +31,14 @@ nav .menu-item {
   transition: 0.3s;
   font-size: 18px;
 }
-nav .menu-item.active,
-nav .menu-item:hover {
+nav .menu-item.active {
   border-bottom-color: #f87474;
 }
+
+nav .menu-item:hover {
+  background-color: #f87474;
+}
+
 nav .menu-item a {
   color: inherit;
   text-decoration: none;

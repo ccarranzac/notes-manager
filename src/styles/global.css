@@ -12,9 +12,16 @@
 }
 
 .content {
-  min-height: 91.5vh;
+  min-height: 95vh;
   background-color: #f9f2ed;
   padding: 1rem;
+}
+
+.container {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 /* width */
